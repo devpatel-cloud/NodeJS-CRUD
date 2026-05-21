@@ -69,7 +69,7 @@ jobs:
 
       - name: Syntax Validation
 
-        run: node server.js
+        run: node --check server.js
 
 
   deploy:
