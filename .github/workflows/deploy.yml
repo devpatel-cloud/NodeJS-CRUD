@@ -9,6 +9,7 @@ on:
 
       - master
 
+
 jobs:
 
   validate:
@@ -37,7 +38,36 @@ jobs:
         run: npm install
 
 
-      - name: Check Syntax
+      - name: Validate package.json
+
+        run: |
+
+          node -e "require('./package.json')"
+
+
+      - name: Check .env File
+
+        run: |
+
+          if [ ! -f .env ]; then
+
+            echo ".env file missing"
+
+            exit 1
+
+          fi
+
+
+      - name: Check Required Environment Variables
+
+        run: |
+
+          grep PORT .env || exit 1
+
+          grep JWT_SECRET .env || exit 1
+
+
+      - name: Syntax Validation
 
         run: node server.js
 
@@ -68,7 +98,7 @@ jobs:
 
             cd NodeJS-CRUD
 
-            git pull origin main
+            git pull origin master
 
             npm install
 
